@@ -31,6 +31,8 @@ app.get("/health", (req, res) => {
   res.status(200).json({ msg: "api is up and running" });
 });
 
+console.log("NODE_ENV is:", ENV.NODE_ENV);
+
 // Serve frontend in production
 if (ENV.NODE_ENV === "production") {
   const frontendPath = path.resolve(__dirname, "../../frontend/dist");
@@ -38,7 +40,7 @@ if (ENV.NODE_ENV === "production") {
 
   app.use(express.static(frontendPath));
 
-  app.get("*", (req, res) => {
+  app.get("/.*/", (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
